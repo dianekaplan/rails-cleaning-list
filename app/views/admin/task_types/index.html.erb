@@ -1,0 +1,24 @@
+<h1>Task Types</h1>
+
+<p>
+  <a href="/admin/task_types/new" class="button">New Task Type</a>
+  <%= link_to 'Database View', database_view_admin_task_types_path, class: 'button', style: 'background-color: #9b59b6; margin-left: 10px;' %>
+</p>
+
+<table>
+  <thead>
+    <tr><th>Name</th><th>Times / cycle</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+    <% @task_types.each do |tt| %>
+      <tr>
+        <td><%= tt.name %></td>
+        <td><%= tt.times_per_cycle %></td>
+        <td>
+          <a href="/admin/task_types/<%= tt.id %>/edit">Edit</a> |
+          <%= button_to 'Delete', admin_task_type_path(tt), method: :delete, form: { style: 'display:inline' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

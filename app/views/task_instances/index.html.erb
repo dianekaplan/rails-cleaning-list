@@ -1,0 +1,35 @@
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <h1 style="margin: 0;">Current cleaning list</h1>
+  <%= link_to 'Admin', admin_root_path, style: 'background-color: #3498db; color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: 600;' %>
+</div>
+
+<% if @latest_cycle.nil? %>
+  <p>No cycle yet — ask admin to create a cycle.</p>
+<% else %>
+  <p>Cycle from <%= @latest_cycle.start_date %> to <%= @latest_cycle.end_date %></p>
+
+  <table>
+    <thead>
+      <tr><th>Task</th><th>Completed date</th><th>Previous completion date</th></tr>
+    </thead>
+    <tbody>
+      <% @task_instances.each do |ti| %>
+        <tr>
+          <td>
+            <%= ti.task_type&.name %>
+            <% if !ti.completed_bool %>
+              <form action="<%= task_instance_path(ti) %>" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="patch">
+                <input type="hidden" name="mark_done" value="true">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                <button type="submit" style="background-color: #FFD700; color: black; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.9em;">Mark done</button>
+              </form>
+            <% end %>
+          </td>
+          <td><%= ti.completed_date&.strftime('%m-%d') %></td>
+          <td><%= ti.task_type&.previous_completion_date&.strftime('%m-%d') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

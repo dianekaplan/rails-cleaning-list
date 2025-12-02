@@ -1,0 +1,9 @@
+<h1>New Task Type</h1>
+
+<form action="/admin/task_types" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+  <label>Name: <input type="text" name="task_type[name]"></label><br>
+  <label>Description: <textarea name="task_type[description]"></textarea></label><br>
+  <label>Times Per Cycle: <input type="number" name="task_type[times_per_cycle]" value="1" min="1"></label><br>
+  <button type="submit">Create</button>
+</form>

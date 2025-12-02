@@ -1,0 +1,59 @@
+<h1>Edit Task Type</h1>
+
+<form action="/admin/task_types/<%= @task_type.id %>" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+  <input type="hidden" name="_method" value="patch" />
+  <label>Name: <input type="text" name="task_type[name]" value="<%= @task_type.name %>"></label><br>
+  <label>Description: <textarea name="task_type[description]"> <%= @task_type.description %></textarea></label><br>
+  <label>Times Per Cycle: <input type="number" name="task_type[times_per_cycle]" value="<%= @task_type.times_per_cycle %>" min="1"></label><br>
+  
+  <% months = {1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April', 5 => 'May', 6 => 'June', 
+               7 => 'July', 8 => 'August', 9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'} %>
+  
+  <fieldset id="monthly-counts-fieldset" class="<%= 'collapsed' if @task_type.monthly_counts.blank? %>">
+    <legend>
+      <span class="toggle-icon"><%= @task_type.monthly_counts.blank? ? '▶' : '▼' %></span>
+      Monthly Counts (override times per cycle for specific months)
+    </legend>
+    <div class="fieldset-content">
+      <% months.each do |num, name| %>
+        <label>
+          <%= name %>: 
+          <input type="number" name="task_type[monthly_counts][<%= num %>]" 
+                 value="<%= @task_type.monthly_counts[num.to_s] %>" min="0" placeholder="default">
+        </label><br>
+      <% end %>
+    </div>
+  </fieldset>
+  
+  <button type="submit">Update</button>
+</form>
+
+<p><%= link_to 'Cancel', admin_task_types_path, class: 'button' %></p>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Function to add toggle functionality to a fieldset
+    function addToggleFunctionality(fieldsetId) {
+      const fieldset = document.getElementById(fieldsetId);
+      if (!fieldset) return;
+      
+      const legend = fieldset.querySelector('legend');
+      const toggleIcon = legend.querySelector('.toggle-icon');
+      
+      legend.addEventListener('click', function() {
+        fieldset.classList.toggle('collapsed');
+        
+        // Update the toggle icon
+        if (fieldset.classList.contains('collapsed')) {
+          toggleIcon.textContent = '▶';
+        } else {
+          toggleIcon.textContent = '▼';
+        }
+      });
+    }
+    
+    // Add toggle functionality to monthly counts fieldset
+    addToggleFunctionality('monthly-counts-fieldset');
+  });
+</script>

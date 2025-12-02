@@ -1,0 +1,79 @@
+# Seed data for TaskType records.
+# Each entry must include: name, description, times_per_cycle
+
+- name: "Mowing the lawn"
+  # monthly_counts map month number (1-12) -> times per cycle for that month
+  monthly_counts:
+    "5": 2
+    "6": 2
+    "7": 2
+    "8": 2
+    "9": 1
+    "10": 1
+
+- name: "Basement: sweeping"
+  times_per_cycle: 1
+
+- name: "First floor: sweeping and mopping, including bathroom floor"
+  times_per_cycle: 1
+
+- name: "2nd & 3rd floors: sweeping and mopping, including bathroom floors"
+  times_per_cycle: 1
+
+- name: "Floors: vacuuming all rugs (1st, 2nd, 3rd floors)"
+  times_per_cycle: 1
+
+- name: "First floor: bathroom"
+  times_per_cycle: 1
+
+- name: "First floor: entryway and back area"
+  description: "sweep floors, shake out or sweep rug"
+  times_per_cycle: 1
+
+- name: "First floor: dusting (surfaces, pictures, windowsills)"
+  times_per_cycle: 1
+
+- name: "First floor: kitchen"
+  description: "Counters, stovetop, stainless steel appliances made spotless, remove racks and clean out the sink, spray any cabinet smudges"
+  times_per_cycle: 1
+
+- name: "Outside: front steps and walk, back patio"
+  description: "Include spraying table & chairs"
+  times_per_cycle: 1
+
+- name: "Stairs (basement to the top)"
+  description: "Spray the hard floor parts, pick any fuzzies/particles off of carpeted parts"
+  times_per_cycle: 1
+
+- name: "Trash cans: basement (1), first floor (1), 2nd floor (5), 3rd floor (2)"
+  description: "Get a new trash bag and empty waste baskets into it, put into trash bin. Do/don't include kitchen trash depending on how full"
+  times_per_cycle: 1
+
+- name: "2nd floor: Iain bathroom & our bathroom"
+  times_per_cycle: 1
+
+- name: "3rd floor: bathroom"
+  description: "including dusting ledges and shelves"
+  times_per_cycle: 1
+
+- name: "Our bedroom & landing: dusting"
+  times_per_cycle: 1
+
+- name: "3rd floor cozy space: dusting"
+  description: "surfaces, inside shelves, windowsills, marble ledge"
+  times_per_cycle: 1
+
+- name: "Watering the plants"
+  description: "downstairs orchids and corner plants, Iain plants upstairs"
+  times_per_cycle: 1
+
+- name: "Fill a yard bag"
+  times_per_cycle: 1
+  monthly_counts:
+    "5": 1
+    "6": 1
+    "7": 1
+    "8": 1
+    "9": 1
+    "10": 1
+    "11": 1

@@ -1,0 +1,17 @@
+<h1>Cycles</h1>
+
+<a href="/admin/cycles/new">New Cycle</a>
+
+<table>
+  <thead>
+    <tr><th>Start</th><th>End</th></tr>
+  </thead>
+  <tbody>
+    <% @cycles.each do |c| %>
+      <tr>
+        <td><%= c.start_date %></td>
+        <td><%= c.end_date %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

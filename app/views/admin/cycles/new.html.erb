@@ -1,0 +1,14 @@
+<h1>New Cycle</h1>
+
+<form action="/admin/cycles" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+  <label>Start Date: <input type="date" name="cycle[start_date]"></label><br>
+  <label>End Date: <input type="date" name="cycle[end_date]"></label><br>
+  <button type="submit">Create cycle</button>
+</form>
+
+<p>Creating a cycle will automatically create TaskInstance records for all existing TaskTypes. 
+The number of TaskInstances per TaskType is typically determined by `times_per_cycle`. 
+For special cases, we use the monthly_counts field for flexibility: leave months empty to skip, 
+or specify more times per cycle for some months (ex: mowing the lawn takes a break over winter and is
+more frequent in summer than fall) .</p>
