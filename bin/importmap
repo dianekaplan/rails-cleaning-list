@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# Lightweight binstub that delegates to `bundle exec importmap`.
-# Uses `bundle exec` instead of Gem.bin_path so it works both locally
-# and in CI when the bundle environment is set up.
-exec "bundle", "exec", "importmap", *ARGV
+
+require_relative "../config/application"
+require "importmap/commands"
