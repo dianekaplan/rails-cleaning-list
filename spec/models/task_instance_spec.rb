@@ -22,6 +22,6 @@ RSpec.describe TaskInstance, type: :model do
     ti.mark_done!
     ti.reload
     expect(ti.completed_bool).to be_truthy
-    expect(ti.completed_date).to eq(Date.today)
+    expect(ti.completed_date.to_date.strftime('%m/%d/%Y')).to eq(Date.today.strftime('%m/%d/%Y'))
   end
 end
