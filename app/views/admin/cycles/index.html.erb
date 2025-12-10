@@ -1,16 +1,25 @@
+<div style="margin-bottom: 20px;">
+  <%= link_to '← Back to Admin Menu', admin_root_path, style: 'color: #3498db; text-decoration: none;' %>
+</div>
+
 <h1>Cycles</h1>
 
 <a href="/admin/cycles/new">New Cycle</a>
 
 <table>
   <thead>
-    <tr><th>Start</th><th>End</th></tr>
+    <tr><th>Start</th><th>End</th><th>Actions</th></tr>
   </thead>
   <tbody>
-    <% @cycles.each do |c| %>
+    <% @cycles.each_with_index do |c, index| %>
       <tr>
         <td><%= c.start_date %></td>
         <td><%= c.end_date %></td>
+        <td>
+          <% if index == 0 %>
+            <%= button_to 'Extend a week', extend_week_admin_cycle_path(c), method: :patch, style: 'background-color: #FFD700; color: black; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.9em;' %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
