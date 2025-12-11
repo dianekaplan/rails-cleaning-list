@@ -26,8 +26,8 @@
               </form>
             <% end %>
           </td>
-          <td><%= ti.completed_date&.strftime('%m-%d') %></td>
-          <td><%= ti.task_type&.previous_completion_date&.strftime('%m-%d') %></td>
+          <td><%= ti.completed_date&.strftime('%m/%d') %></td>
+          <td><%= ti.task_type&.previous_completion_date&.strftime('%m/%d') %></td>
         </tr>
       <% end %>
     </tbody>
