@@ -1,5 +1,5 @@
 class TaskType < ActiveRecord::Base
-  self.table_name = 'task_types'
+  self.table_name = "task_types"
 
   # per-month counts stored as month-number string => integer
   attribute :monthly_counts, :json, default: {}
@@ -20,9 +20,9 @@ class TaskType < ActiveRecord::Base
     month_str = month.to_s
     if monthly_counts.present?
       return monthly_counts[month_str].to_i if monthly_counts.key?(month_str)
-      return 0
+      0
     else
-      return times_per_cycle.to_i
+      times_per_cycle.to_i
     end
   end
 
@@ -32,9 +32,9 @@ class TaskType < ActiveRecord::Base
     current = Cycle.current_cycle
     task_instances
       .joins(:cycle)
-      .where('cycles.id != ?', current.id)
+      .where("cycles.id != ?", current.id)
       .where(completed_bool: true)
-      .order('task_instances.completed_date DESC')
+      .order("task_instances.completed_date DESC")
       .first&.completed_date
   end
 
@@ -43,14 +43,14 @@ class TaskType < ActiveRecord::Base
   def monthly_counts_values
     return if monthly_counts.nil?
     unless monthly_counts.is_a?(Hash)
-      errors.add(:monthly_counts, 'must be a hash mapping month->count')
+      errors.add(:monthly_counts, "must be a hash mapping month->count")
       return
     end
 
     invalid_key = monthly_counts.keys.map(&:to_s).reject { |k| (1..12).include?(k.to_i) }
-    errors.add(:monthly_counts, 'keys must be month numbers 1..12') if invalid_key.any?
+    errors.add(:monthly_counts, "keys must be month numbers 1..12") if invalid_key.any?
 
     invalid_val = monthly_counts.values.reject { |v| v.to_i >= 0 }
-    errors.add(:monthly_counts, 'values must be integers >= 0') if invalid_val.any?
+    errors.add(:monthly_counts, "values must be integers >= 0") if invalid_val.any?
   end
 end

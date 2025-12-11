@@ -11,7 +11,7 @@ module Admin
     def create
       @cycle = Cycle.new(cycle_params)
       if @cycle.save
-        redirect_to admin_cycles_path, notice: 'Cycle created and task instances generated.'
+        redirect_to admin_cycles_path, notice: "Cycle created and task instances generated."
       else
         render :new
       end
@@ -21,9 +21,9 @@ module Admin
       @cycle = Cycle.find(params[:id])
       @cycle.end_date = @cycle.end_date + 1.week
       if @cycle.save
-        redirect_to admin_cycles_path, notice: 'Cycle extended by one week.'
+        redirect_to admin_cycles_path, notice: "Cycle extended by one week."
       else
-        redirect_to admin_cycles_path, alert: 'Failed to extend cycle.'
+        redirect_to admin_cycles_path, alert: "Failed to extend cycle."
       end
     end
 

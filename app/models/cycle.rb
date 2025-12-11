@@ -1,5 +1,5 @@
 class Cycle < ActiveRecord::Base
-  self.table_name = 'cycles'
+  self.table_name = "cycles"
 
   has_many :task_instances, dependent: :restrict_with_error
 
@@ -23,6 +23,6 @@ class Cycle < ActiveRecord::Base
 
   def end_after_start
     return if end_date.nil?
-    errors.add(:end_date, 'must be after start_date') if end_date < start_date
+    errors.add(:end_date, "must be after start_date") if end_date < start_date
   end
 end

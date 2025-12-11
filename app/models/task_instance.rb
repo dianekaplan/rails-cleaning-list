@@ -1,10 +1,10 @@
 class TaskInstance < ActiveRecord::Base
-  self.table_name = 'task_instances'
+  self.table_name = "task_instances"
 
   belongs_to :task_type
   belongs_to :cycle
 
-  validates :completed_bool, inclusion: { in: [true, false] }
+  validates :completed_bool, inclusion: { in: [ true, false ] }
   validate :completed_date_when_completed
 
   def completed_date_when_completed
