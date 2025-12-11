@@ -16,7 +16,7 @@ Rails.application.routes.draw do
         get "database_view"
       end
     end
-    resources :cycles, only: [ :new, :create, :index ] do
+    resources :cycles, only: [ :new, :create, :index, :destroy ] do
       member do
         patch "extend_week"
       end

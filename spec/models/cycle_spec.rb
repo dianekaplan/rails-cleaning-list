@@ -40,4 +40,44 @@ RSpec.describe Cycle, type: :model do
     Cycle.create!(start_date: Date.new(2025, 12, 1))
     expect(TaskInstance.count).to eq(initial + 0) # mowing -> 0 in month 12 (not in monthly_counts)
   end
+
+  describe '.current_cycle' do
+    it 'returns the cycle with the latest end_date' do
+      cycle1 = Cycle.create!(start_date: Date.new(2025, 1, 1), end_date: Date.new(2025, 1, 31))
+      cycle2 = Cycle.create!(start_date: Date.new(2025, 2, 1), end_date: Date.new(2025, 2, 28))
+      cycle3 = Cycle.create!(start_date: Date.new(2025, 3, 1), end_date: Date.new(2025, 3, 31))
+
+      expect(Cycle.current_cycle).to eq(cycle3)
+    end
+
+    it 'returns nil when there are no cycles' do
+      Cycle.destroy_all
+      expect(Cycle.current_cycle).to be_nil
+    end
+  end
+
+  describe 'destroying a cycle' do
+    it 'destroys associated task_instances when cycle is destroyed' do
+      task_type = TaskType.create!(name: 'Test Task', times_per_cycle: 2)
+      cycle = Cycle.create!(start_date: Date.new(2025, 1, 1), end_date: Date.new(2025, 1, 31))
+
+      expect(cycle.task_instances.count).to eq(2)
+      task_instance_ids = cycle.task_instances.pluck(:id)
+
+      cycle.destroy
+
+      expect(TaskInstance.where(id: task_instance_ids)).to be_empty
+    end
+
+    it 'updates current_cycle after destroying the current cycle' do
+      cycle1 = Cycle.create!(start_date: Date.new(2025, 1, 1), end_date: Date.new(2025, 1, 31))
+      cycle2 = Cycle.create!(start_date: Date.new(2025, 2, 1), end_date: Date.new(2025, 2, 28))
+
+      expect(Cycle.current_cycle).to eq(cycle2)
+
+      cycle2.destroy
+
+      expect(Cycle.current_cycle).to eq(cycle1)
+    end
+  end
 end
