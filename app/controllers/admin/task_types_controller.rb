@@ -16,7 +16,7 @@ module Admin
     def create
       @task_type = TaskType.new(task_type_params)
       if @task_type.save
-        redirect_to admin_task_types_path, notice: 'Task type created.'
+        redirect_to admin_task_types_path, notice: "Task type created."
       else
         render :new
       end
@@ -29,7 +29,7 @@ module Admin
     def update
       @task_type = TaskType.find(params[:id])
       if @task_type.update(task_type_params)
-        redirect_to admin_task_types_path, notice: 'Task type updated.'
+        redirect_to admin_task_types_path, notice: "Task type updated."
       else
         render :edit
       end
@@ -38,12 +38,12 @@ module Admin
     def destroy
       @task_type = TaskType.find(params[:id])
       if @task_type.destroy
-        redirect_to admin_task_types_path, notice: 'Task type deleted.'
+        redirect_to admin_task_types_path, notice: "Task type deleted."
       else
-        redirect_to admin_task_types_path, alert: 'Cannot delete task type: it has associated task instances.'
+        redirect_to admin_task_types_path, alert: "Cannot delete task type: it has associated task instances."
       end
     rescue ActiveRecord::DeleteRestrictionError => e
-      redirect_to admin_task_types_path, alert: 'Cannot delete task type: it has associated task instances.'
+      redirect_to admin_task_types_path, alert: "Cannot delete task type: it has associated task instances."
     end
 
     private

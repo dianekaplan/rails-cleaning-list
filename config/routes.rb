@@ -10,20 +10,20 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   namespace :admin do
-    root to: 'dashboard#index'
-    resources :task_types, except: [:show] do
+    root to: "dashboard#index"
+    resources :task_types, except: [ :show ] do
       collection do
-        get 'database_view'
+        get "database_view"
       end
     end
-    resources :cycles, only: [:new, :create, :index] do
+    resources :cycles, only: [ :new, :create, :index ] do
       member do
-        patch 'extend_week'
+        patch "extend_week"
       end
     end
   end
 
-  resources :task_instances, only: [:index, :update]
+  resources :task_instances, only: [ :index, :update ]
 
-  root to: 'task_instances#index'
+  root to: "task_instances#index"
 end

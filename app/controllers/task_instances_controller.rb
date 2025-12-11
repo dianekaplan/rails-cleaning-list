@@ -12,12 +12,12 @@ class TaskInstancesController < ApplicationController
     @task_instance = TaskInstance.find(params[:id])
     if params[:mark_done]
       @task_instance.update(completed_bool: true, completed_date: Date.today)
-      redirect_to root_path, notice: 'Marked done.'
+      redirect_to root_path, notice: "Marked done."
     else
       if @task_instance.update(task_instance_params)
-        redirect_to root_path, notice: 'Updated.'
+        redirect_to root_path, notice: "Updated."
       else
-        redirect_to root_path, alert: 'Failed to update.'
+        redirect_to root_path, alert: "Failed to update."
       end
     end
   end
