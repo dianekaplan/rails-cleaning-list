@@ -8,16 +8,19 @@
 
 <table>
   <thead>
-    <tr><th>Start</th><th>End</th></tr>
+    <tr><th>Start</th><th>End</th><th></th></tr>
   </thead>
   <tbody>
-    <% @cycles.each_with_index do |c, index| %>
+    <!-- Cycle model, not to be confused with fails' cycle method -->
+    <% current_cycle = ::Cycle.current_cycle %>
+    <% @cycles.each do |c| %>
       <tr>
-        <td><%= c.start_date.strftime('%m/%d/%Y') %></td>
+        <td><%= button_to 'Delete cycle', admin_cycle_path(c), method: :delete, form: { style: 'display: inline-block; margin-right: 10px;' }, params: {}, style: 'background-color: #dc3545 !important; color: white !important; border: none !important; padding: 4px 8px !important; border-radius: 4px !important; cursor: pointer !important; font-size: 0.9em !important; text-decoration: none !important;' %>
+        <%= c.start_date.strftime('%m/%d/%Y') %></td>
         <td>
           <%= c.end_date.strftime('%m/%d/%Y') %>
-          <% if index == 0 %>
-            <%= button_to 'Extend a week', extend_week_admin_cycle_path(c), method: :patch, style: 'background-color: #FFD700; color: black; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.9em; margin-left: 10px; display: inline;' %>
+          <% if c == current_cycle %>
+            <%= button_to 'Extend a week', extend_week_admin_cycle_path(c), method: :patch, form: { style: 'display: inline-block; margin-left: 10px;' }, style: 'background-color: #FFD700; color: black; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.9em;' %>
           <% end %>
         </td>
       </tr>

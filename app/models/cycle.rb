@@ -1,7 +1,7 @@
 class Cycle < ActiveRecord::Base
   self.table_name = "cycles"
 
-  has_many :task_instances, dependent: :restrict_with_error
+  has_many :task_instances, dependent: :destroy
 
   validates :start_date, presence: true
   validate :end_after_start
@@ -9,7 +9,7 @@ class Cycle < ActiveRecord::Base
   after_create :generate_task_instances
 
   def self.current_cycle
-    order(id: :desc).first
+    order(end_date: :desc).first
   end
 
   def generate_task_instances
