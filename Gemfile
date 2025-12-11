@@ -4,8 +4,19 @@ source "https://rubygems.org"
 gem "rails", "~> 7.2.3"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
+
+
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", ">= 1.4"
+# gem "sqlite3", ">= 1.4"
+
+group :development do
+  gem 'sqlite3', ">= 1.4"
+end
+
+group :production do
+  gem 'pg'
+end
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
