@@ -7,6 +7,11 @@
   <p>No cycle yet — ask admin to create a cycle.</p>
 <% else %>
   <p>Cycle from <%= @latest_cycle.start_date %> to <%= @latest_cycle.end_date %></p>
+  <p style="font-weight: 600; margin-top: 10px;">
+    <span style="color: #e74c3c;"><%= @tasks_remaining %> task<%= @tasks_remaining == 1 ? '' : 's' %> remaining</span>
+    •
+    <span style="color: #3498db;"><%= @days_remaining %> day<%= @days_remaining == 1 ? '' : 's' %> remaining</span>
+  </p>
 
   <table>
     <thead>

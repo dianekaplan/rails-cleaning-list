@@ -6,6 +6,11 @@ class TaskInstancesController < ApplicationController
     else
       []
     end
+
+    if @latest_cycle
+      @tasks_remaining = @task_instances.where(completed_bool: false).count
+      @days_remaining = (@latest_cycle.end_date - Date.today).to_i + 1
+    end
   end
 
   def update
