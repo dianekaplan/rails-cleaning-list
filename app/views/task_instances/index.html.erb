@@ -21,7 +21,7 @@
       <% @task_instances.each do |ti| %>
         <tr>
           <td>
-            <%= ti.task_type&.name%> (last done: <%= ti.task_type&.previous_completion_date&.strftime('%m/%d') %>)
+            <%= ti.task_type&.name%> <span style="font-weight: bold; color: #888888;"> Last done: <%= ti.task_type&.previous_completion_date&.strftime('%m/%d') %></span>
           </td>
           <td>
             <% if !ti.completed_bool %>
