@@ -15,13 +15,15 @@
 
   <table>
     <thead>
-      <tr><th>Task</th><th>Completed date</th><th>Previous completion date</th></tr>
+      <tr><th>Task</th><th>Completed?</th></tr>
     </thead>
     <tbody>
       <% @task_instances.each do |ti| %>
         <tr>
           <td>
-            <%= ti.task_type&.name %>
+            <%= ti.task_type&.name%> (last done: <%= ti.task_type&.previous_completion_date&.strftime('%m/%d') %>)
+          </td>
+          <td>
             <% if !ti.completed_bool %>
               <form action="<%= task_instance_path(ti) %>" method="post" style="display:inline;">
                 <input type="hidden" name="_method" value="patch">
@@ -29,10 +31,10 @@
                 <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
                 <button type="submit" style="background-color: #FFD700; color: black; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.9em;">Mark done</button>
               </form>
+            <% else %>
+            <%= ti.completed_date&.strftime('%m/%d') %>
             <% end %>
           </td>
-          <td><%= ti.completed_date&.strftime('%m/%d') %></td>
-          <td><%= ti.task_type&.previous_completion_date&.strftime('%m/%d') %></td>
         </tr>
       <% end %>
     </tbody>
