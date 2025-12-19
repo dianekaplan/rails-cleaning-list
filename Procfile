@@ -1,1 +1,1 @@
-web: bundle exec rails server -p $PORT
+web: RUBY_DEBUG_OPEN=true bundle exec rails server -p $PORT
