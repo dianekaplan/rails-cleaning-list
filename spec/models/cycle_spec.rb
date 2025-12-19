@@ -15,7 +15,6 @@ RSpec.describe Cycle, type: :model do
     # t1 no monthly_counts (always active) -> 1
     t1 = TaskType.create!(name: 'A', times_per_cycle: 1)
     # t2 active only month 2 using monthly_counts -> not created for month 1
-    binding.break
     t2 = TaskType.create!(name: 'B', times_per_cycle: 2, monthly_counts: { '2' => 2 })
     # t3 active only month 1 using monthly_counts -> created
     t3 = TaskType.create!(name: 'C', times_per_cycle: 1, monthly_counts: { '1' => 1 })
