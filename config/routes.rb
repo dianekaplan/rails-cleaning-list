@@ -25,5 +25,9 @@ Rails.application.routes.draw do
 
   resources :task_instances, only: [ :index, :update ]
 
+  resources :task_types do
+    post :repeat_completed_task_type, on: :member
+  end
+
   root to: "task_instances#index"
 end
