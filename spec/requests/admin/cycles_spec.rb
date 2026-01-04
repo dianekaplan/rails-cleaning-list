@@ -7,7 +7,7 @@ RSpec.describe "Admin::Cycles", type: :request do
     context "when deleting a non-current cycle" do
       it "successfully deletes the cycle and its task instances" do
         cycle1 = Cycle.create!(start_date: Date.new(2025, 1, 1), end_date: Date.new(2025, 1, 31))
-        cycle2 = Cycle.create!(start_date: Date.new(2025, 2, 1), end_date: Date.new(2025, 2, 28))
+        _new_current_cycle = Cycle.create!(start_date: Date.new(2025, 2, 1), end_date: Date.new(2025, 2, 28))
 
         expect {
           delete admin_cycle_path(cycle1)
@@ -22,11 +22,11 @@ RSpec.describe "Admin::Cycles", type: :request do
     context "when deleting the current cycle" do
       it "deletes the cycle and updates the current cycle" do
         cycle1 = Cycle.create!(start_date: Date.new(2025, 1, 1), end_date: Date.new(2025, 1, 31))
-        cycle2 = Cycle.create!(start_date: Date.new(2025, 2, 1), end_date: Date.new(2025, 2, 28))
+        _new_current_cycle = Cycle.create!(start_date: Date.new(2025, 2, 1), end_date: Date.new(2025, 2, 28))
 
-        expect(Cycle.current_cycle).to eq(cycle2)
+        expect(Cycle.current_cycle).to eq(_new_current_cycle)
 
-        delete admin_cycle_path(cycle2)
+        delete admin_cycle_path(_new_current_cycle)
 
         expect(response).to redirect_to(admin_cycles_path)
         expect(flash[:notice]).to include("Cycle deleted. Current cycle is now")
