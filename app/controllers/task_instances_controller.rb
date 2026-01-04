@@ -7,6 +7,8 @@ class TaskInstancesController < ApplicationController
       []
     end
 
+    @task_instances_by_type = @task_instances.group_by(&:task_type)
+
     if @latest_cycle
       @tasks_remaining = @task_instances.where(completed_bool: false).count
       @days_remaining = (@latest_cycle.end_date - Date.today).to_i + 1
