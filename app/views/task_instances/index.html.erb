@@ -38,7 +38,7 @@
             <% else %>
               <form action="<%= repeat_completed_task_type_task_type_path(task_type) %>" method="post" style="display:inline;">
                 <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-                <button type="submit" style="background-color: #FFD700; color: black; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.9em;">Do it again</button>
+                <button type="submit" style="background-color: #A9A9A9 !important; color: white !important; border: none; padding: 4px 8px; border-radius: 4px !important; cursor: pointer; font-size: 0.9em; text-decoration: none !important; display: inline-block !important; font-weight: 600 !important;">Do it again</button>
               </form>
             <% end %>
           </td>

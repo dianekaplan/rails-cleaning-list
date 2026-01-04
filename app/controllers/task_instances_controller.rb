@@ -1,6 +1,6 @@
 class TaskInstancesController < ApplicationController
   def index
-    @latest_cycle = Cycle.order(:id).last
+    @latest_cycle = Cycle.current_cycle
     @task_instances = if @latest_cycle
       TaskInstance.where(cycle: @latest_cycle).includes(:task_type).order(:id)
     else
