@@ -9,6 +9,14 @@ class TaskInstancesController < ApplicationController
 
     @task_instances_by_type = @task_instances.group_by(&:task_type)
 
+    # Sort task types: incomplete first, then completed, both by previous_completion_date ascending
+    @task_instances_by_type = @task_instances_by_type.sort_by do |task_type, instances|
+      has_incomplete_instances = instances.any? { |ti| !ti.completed_bool }
+      primary_sort_key = has_incomplete_instances ? 0 : 1  # 0 = incomplete (show first), 1 = completed
+      secondary_sort_key = task_type.previous_completion_date || Date.new(9999)  # Ascending date; nil dates last
+      [ primary_sort_key, secondary_sort_key ]
+    end.to_h
+
     if @latest_cycle
       @tasks_remaining = @task_instances.where(completed_bool: false).count
       @days_remaining = (@latest_cycle.end_date - Date.today).to_i + 1
