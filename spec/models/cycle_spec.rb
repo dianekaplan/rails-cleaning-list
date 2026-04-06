@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Cycle, type: :model do
-
   it 'is valid with a start_date and end_date' do
     c = Cycle.new(start_date: Date.today, end_date: Date.today + 1)
     expect(c).to be_valid
