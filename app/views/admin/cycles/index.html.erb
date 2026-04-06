@@ -18,7 +18,11 @@
         <td><%= button_to 'Delete cycle', admin_cycle_path(c), method: :delete, form: { style: 'display: inline-block; margin-right: 10px;' }, params: {}, style: 'background-color: #dc3545 !important; color: white !important; border: none !important; padding: 4px 8px !important; border-radius: 4px !important; cursor: pointer !important; font-size: 0.9em !important; text-decoration: none !important;' %>
         <%= c.start_date.strftime('%m/%d/%Y') %></td>
         <td>
-          <%= c.end_date.strftime('%m/%d/%Y') %>
+          <% if c.end_date.present? %>
+            <%= c.end_date.strftime('%m/%d/%Y') %>
+          <% else %>
+            <span style="color: #888;">(none)</span>
+          <% end %>
           <% if c == current_cycle %>
             <%= button_to 'Extend a week', extend_week_admin_cycle_path(c), method: :patch, form: { style: 'display: inline-block; margin-left: 10px;' }, style: 'background-color: #FFD700; color: black; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.9em;' %>
           <% end %>

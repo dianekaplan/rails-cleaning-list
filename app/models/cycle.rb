@@ -4,6 +4,7 @@ class Cycle < ActiveRecord::Base
   has_many :task_instances, dependent: :destroy
 
   validates :start_date, presence: true
+  validates :end_date, presence: true
   validate :end_after_start
 
   after_create :generate_task_instances

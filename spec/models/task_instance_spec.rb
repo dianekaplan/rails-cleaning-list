@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe TaskInstance, type: :model do
   before(:each) do
     @tt = TaskType.create!(name: 'Test', times_per_cycle: 1)
-    @cycle = Cycle.create!(start_date: Date.today)
+    @cycle = Cycle.create!(start_date: Date.today, end_date: Date.today + 1)
   end
 
   it 'is valid when associated and not completed' do

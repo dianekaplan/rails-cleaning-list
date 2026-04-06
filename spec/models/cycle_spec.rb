@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Cycle, type: :model do
-  it 'is valid with a start_date' do
-    c = Cycle.new(start_date: Date.today)
+  it 'is valid with a start_date and end_date' do
+    c = Cycle.new(start_date: Date.today, end_date: Date.today + 1)
     expect(c).to be_valid
   end
 
@@ -20,7 +20,7 @@ RSpec.describe Cycle, type: :model do
     t3 = TaskType.create!(name: 'C', times_per_cycle: 1, monthly_counts: { '1' => 1 })
 
     initial = TaskInstance.count
-    Cycle.create!(start_date: Date.new(2025, 1, 1))
+    Cycle.create!(start_date: Date.new(2025, 1, 1), end_date: Date.new(2025, 1, 31))
     # expected created: t1 (1) + t3 (1) = 2
     expect(TaskInstance.count).to eq(initial + 2)
   end
@@ -29,7 +29,7 @@ RSpec.describe Cycle, type: :model do
     mowing = TaskType.create!(name: 'Mowing', times_per_cycle: 1, monthly_counts: { '5' => 2, '6' => 2, '7' => 2, '8' => 2, '9' => 1, '10' => 1 })
 
     initial = TaskInstance.count
-    Cycle.create!(start_date: Date.new(2025, 5, 1))
+    Cycle.create!(start_date: Date.new(2025, 5, 1), end_date: Date.new(2025, 5, 31))
     expect(TaskInstance.count).to eq(initial + 2) # mowing -> 2 in month 5
   end
 
@@ -37,7 +37,7 @@ RSpec.describe Cycle, type: :model do
     mowing = TaskType.create!(name: 'Mowing', times_per_cycle: 1, monthly_counts: { '5' => 2, '6' => 2, '7' => 2, '8' => 2, '9' => 1, '10' => 1 })
 
     initial = TaskInstance.count
-    Cycle.create!(start_date: Date.new(2025, 12, 1))
+    Cycle.create!(start_date: Date.new(2025, 12, 1), end_date: Date.new(2025, 12, 31))
     expect(TaskInstance.count).to eq(initial + 0) # mowing -> 0 in month 12 (not in monthly_counts)
   end
 
