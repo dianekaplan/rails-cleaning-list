@@ -1,4 +1,5 @@
 class TaskType < ActiveRecord::Base
+    attribute :active, :boolean, default: true
   self.table_name = "task_types"
 
   # per-month counts stored as month-number string => integer

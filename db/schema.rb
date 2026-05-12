@@ -10,32 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_12_02_185000) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_02_185000) do
   create_table "cycles", force: :cascade do |t|
-    t.date "start_date", null: false
-    t.date "end_date"
     t.datetime "created_at", null: false
+    t.date "end_date"
+    t.date "start_date", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "task_instances", force: :cascade do |t|
-    t.integer "task_type_id", null: false
-    t.integer "cycle_id", null: false
     t.boolean "completed_bool", default: false, null: false
     t.datetime "completed_date"
     t.datetime "created_at", null: false
+    t.integer "cycle_id", null: false
+    t.integer "task_type_id", null: false
     t.datetime "updated_at", null: false
     t.index ["cycle_id"], name: "index_task_instances_on_cycle_id"
     t.index ["task_type_id"], name: "index_task_instances_on_task_type_id"
   end
 
   create_table "task_types", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "description"
-    t.integer "times_per_cycle", default: 1, null: false
+    t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text "description"
     t.text "monthly_counts"
+    t.string "name", null: false
+    t.integer "times_per_cycle", default: 1, null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "task_instances", "cycles"

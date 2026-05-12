@@ -10,6 +10,7 @@
   <label>Name: <input type="text" name="task_type[name]" value="<%= @task_type.name %>"></label><br>
   <label>Description: <textarea name="task_type[description]"> <%= @task_type.description %></textarea></label><br>
   <label>Times Per Cycle: <input type="number" name="task_type[times_per_cycle]" value="<%= @task_type.times_per_cycle %>" min="1"></label><br>
+  <label>Active: <input type="checkbox" name="task_type[active]" <%= 'checked' if @task_type.active %>></label><br>
   
   <% months = {1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April', 5 => 'May', 6 => 'June', 
                7 => 'July', 8 => 'August', 9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'} %>

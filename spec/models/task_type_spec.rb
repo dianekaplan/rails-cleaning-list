@@ -1,6 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe TaskType, type: :model do
+  describe 'active field' do
+      it 'defaults to true' do
+        tt = TaskType.new(name: 'ActiveDefault', times_per_cycle: 1)
+        expect(tt.active).to eq(true)
+      end
+
+      it 'can be set to false' do
+        tt = TaskType.new(name: 'Inactive', times_per_cycle: 1, active: false)
+        expect(tt.active).to eq(false)
+      end
+
+      it 'can be saved and loaded as false' do
+        tt = TaskType.create!(name: 'Inactive', times_per_cycle: 1, active: false)
+        expect(TaskType.find(tt.id).active).to eq(false)
+      end
+
+      it 'can be saved and loaded as true' do
+        tt = TaskType.create!(name: 'Active', times_per_cycle: 1, active: true)
+        expect(TaskType.find(tt.id).active).to eq(true)
+      end
+    end
   it 'is valid with name and times_per_cycle' do
     tt = TaskType.new(name: 'Clean', times_per_cycle: 2)
     expect(tt).to be_valid

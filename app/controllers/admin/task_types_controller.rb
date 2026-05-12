@@ -1,5 +1,11 @@
 module Admin
   class TaskTypesController < ApplicationController
+        # PATCH /admin/task_types/:id/toggle_active
+        def toggle_active
+          @task_type = TaskType.find(params[:id])
+          @task_type.update(active: params[:active])
+          head :ok
+        end
     def index
       @task_types = TaskType.all.order(:id)
     end
@@ -49,7 +55,7 @@ module Admin
     private
 
     def task_type_params
-      params.require(:task_type).permit(:name, :description, :times_per_cycle, monthly_counts: {})
+      params.require(:task_type).permit(:name, :description, :times_per_cycle, :active, monthly_counts: {})
     end
   end
 end

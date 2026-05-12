@@ -15,6 +15,9 @@ Rails.application.routes.draw do
       collection do
         get "database_view"
       end
+      member do
+        patch :toggle_active
+      end
     end
     resources :cycles, only: [ :new, :create, :index, :destroy ] do
       member do
