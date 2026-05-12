@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe TaskType, type: :model do
-
-    describe 'active field' do
+  describe 'active field' do
       it 'defaults to true' do
         tt = TaskType.new(name: 'ActiveDefault', times_per_cycle: 1)
         expect(tt.active).to eq(true)
