@@ -14,7 +14,7 @@ class Cycle < ActiveRecord::Base
   end
 
   def generate_task_instances
-    TaskType.find_each do |tt|
+    TaskType.where(active: true).find_each do |tt|
       count = tt.times_for_cycle_that_month(start_date.month)
       count.times do
         TaskInstance.create!(task_type: tt, cycle: self, completed_bool: false)

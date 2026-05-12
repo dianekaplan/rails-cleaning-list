@@ -11,13 +11,19 @@
 
 <table>
   <thead>
-    <tr><th>Name</th><th>Times / cycle</th><th>Actions</th></tr>
+    <tr><th>Name</th><th>Times / cycle</th><th>Active</th><th>Actions</th></tr>
   </thead>
   <tbody>
     <% @task_types.each do |tt| %>
       <tr>
         <td><%= tt.name %></td>
         <td><%= tt.times_per_cycle %></td>
+        <td>
+          <label class="switch">
+            <input type="checkbox" class="active-toggle" data-id="<%= tt.id %>" <%= 'checked' if tt.active %>>
+            <span class="slider round"></span>
+          </label>
+        </td>
         <td>
           <a href="/admin/task_types/<%= tt.id %>/edit">Edit</a> |
           <%= button_to 'Delete', admin_task_type_path(tt), method: :delete, form: { style: 'display:inline' } %>
@@ -26,3 +32,57 @@
     <% end %>
   </tbody>
 </table>
+
+<style>
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+}
+.switch input {display:none;}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: #4CAF50;
+}
+input:checked + .slider:before {
+  transform: translateX(16px);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.active-toggle').forEach(function(toggle) {
+    toggle.addEventListener('change', function() {
+      var id = this.getAttribute('data-id');
+      var checked = this.checked;
+      fetch('/admin/task_types/' + id + '/toggle_active', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ active: checked })
+      });
+    });
+  });
+});
+</script>
