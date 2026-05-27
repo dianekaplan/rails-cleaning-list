@@ -21,10 +21,10 @@
       <% @task_instances_by_type.each do |task_type, instances| %>
         <tr>
           <td>
-            <%= task_type.name %>
             <% if task_type.description.present? %>
               <span class="info-icon" data-description="<%= task_type.description.gsub('"', '&quot;') %>" title="Click for more info">ℹ️</span>
             <% end %>
+            <%= task_type.name %>
             <span style="font-weight: bold; color: #888888;"> Last done: <%= task_type.previous_completion_date&.strftime('%m/%d') %></span>
           </td>
           <td>
