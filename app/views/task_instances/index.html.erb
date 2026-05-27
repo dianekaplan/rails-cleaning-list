@@ -21,7 +21,11 @@
       <% @task_instances_by_type.each do |task_type, instances| %>
         <tr>
           <td>
-            <%= task_type.name %> <span style="font-weight: bold; color: #888888;"> Last done: <%= task_type.previous_completion_date&.strftime('%m/%d') %></span>
+            <% if task_type.description.present? %>
+              <span class="info-icon" data-description="<%= task_type.description.gsub('"', '&quot;') %>" title="Click for more info">ℹ️</span>
+            <% end %>
+            <%= task_type.name %>
+            <span style="font-weight: bold; color: #888888;"> Last done: <%= task_type.previous_completion_date&.strftime('%m/%d') %></span>
           </td>
           <td>
             <% completed_dates = instances.select(&:completed_bool).map { |ti| ti.completed_date&.strftime('%m/%d') }.compact.join(', ') %>
@@ -47,3 +51,106 @@
     </tbody>
   </table>
 <% end %>
+
+<!-- Modal for displaying task description -->
+<div id="descriptionModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <div id="modalDescription"></div>
+  </div>
+</div>
+
+<style>
+.info-icon {
+  cursor: pointer;
+  font-size: 1.1em;
+  margin-left: 5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.info-icon:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close-modal {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+  color: #000;
+}
+
+#modalDescription {
+  margin-top: 10px;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById('descriptionModal');
+  const modalDescription = document.getElementById('modalDescription');
+  const closeBtn = document.querySelector('.close-modal');
+  
+  // Add click handlers to all info icons
+  document.querySelectorAll('.info-icon').forEach(function(icon) {
+    icon.addEventListener('click', function() {
+      const description = this.getAttribute('data-description');
+      modalDescription.textContent = description;
+      modal.style.display = 'block';
+    });
+  });
+  
+  // Close modal when clicking the X
+  closeBtn.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+  
+  // Close modal when clicking outside of it
+  window.addEventListener('click', function(event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+  
+  // Close modal with Escape key
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' && modal.style.display === 'block') {
+      modal.style.display = 'none';
+    }
+  });
+});
+</script>
