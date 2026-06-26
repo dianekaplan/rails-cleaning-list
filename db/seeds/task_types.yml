@@ -65,7 +65,7 @@
 
 - name: "Watering the plants"
   description: "downstairs orchids and corner plants, Iain plants upstairs"
-  times_per_cycle: 1
+  times_per_cycle: 0
 
 - name: "Fill a yard bag"
   times_per_cycle: 1
@@ -77,3 +77,7 @@
     "9": 1
     "10": 1
     "11": 1
+
+- name: "Our bathroom shower"
+  description: "Glass walls, ledge, de-sewer-rat"
+  times_per_cycle: 1
