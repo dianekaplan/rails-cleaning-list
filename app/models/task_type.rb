@@ -29,7 +29,6 @@ class TaskType < ActiveRecord::Base
 
   # return the completion date from the most recent task_instance of this task_type
   def previous_completion_date
-    current = Cycle.current_cycle
     task_instances
       .joins(:cycle)
       .where(completed_bool: true)
