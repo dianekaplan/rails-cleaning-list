@@ -55,7 +55,19 @@ module Admin
     private
 
     def task_type_params
-      params.require(:task_type).permit(:name, :description, :times_per_cycle, :active, monthly_counts: {})
+      permitted = params.require(:task_type).permit(:name, :description, :times_per_cycle, :active, monthly_counts: {})
+      normalize_monthly_counts(permitted)
+    end
+
+    def normalize_monthly_counts(permitted_params)
+      return permitted_params unless permitted_params[:monthly_counts].is_a?(ActionController::Parameters)
+
+      monthly_count_values = permitted_params[:monthly_counts].to_h.transform_values do |value|
+        value.blank? ? nil : value
+      end.compact
+
+      permitted_params[:monthly_counts] = monthly_count_values
+      permitted_params
     end
   end
 end

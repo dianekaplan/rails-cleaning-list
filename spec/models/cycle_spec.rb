@@ -41,6 +41,18 @@ RSpec.describe Cycle, type: :model do
     expect(TaskInstance.count).to eq(initial + 0) # mowing -> 0 in month 12 (not in monthly_counts)
   end
 
+  it 'logs an error when a task instance cannot be created' do
+    task_type = TaskType.create!(name: 'Broken Task', times_per_cycle: 1)
+    cycle = Cycle.new(start_date: Date.new(2025, 1, 1), end_date: Date.new(2025, 1, 31))
+
+    allow(TaskInstance).to receive(:create!).and_raise(ActiveRecord::RecordInvalid.new(TaskInstance.new))
+    allow(Rails.logger).to receive(:error)
+
+    expect(Rails.logger).to receive(:error).with(/Failed to create task instance 1\/1 for task type Broken Task/)
+
+    expect { cycle.save! }.to raise_error(ActiveRecord::RecordInvalid)
+  end
+
   describe '.current_cycle' do
     it 'returns the cycle with the latest end_date' do
       cycle1 = Cycle.create!(start_date: Date.new(2025, 1, 1), end_date: Date.new(2025, 1, 31))

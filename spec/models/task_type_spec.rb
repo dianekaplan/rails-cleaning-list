@@ -49,8 +49,15 @@ RSpec.describe TaskType, type: :model do
     expect(tt).to be_valid
     expect(tt.times_for_cycle_that_month(5)).to eq(2)
     expect(tt.times_for_cycle_that_month(9)).to eq(1)
-    # month with no mapping should be 0 (monthly_counts explicitly controls months)
+    # months with no mapping should be 0 when monthly_counts explicitly controls the months
     expect(tt.times_for_cycle_that_month(12)).to eq(0)
+  end
+
+  it 'falls back to times_per_cycle when monthly_counts has a blank value for a month' do
+    tt = TaskType.new(name: 'Lawn', times_per_cycle: 3, monthly_counts: { '5' => '', '6' => 2 })
+
+    expect(tt.times_for_cycle_that_month(5)).to eq(3)
+    expect(tt.times_for_cycle_that_month(6)).to eq(2)
   end
 
   it 'rejects invalid monthly_counts values' do
