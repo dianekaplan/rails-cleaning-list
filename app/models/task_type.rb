@@ -18,13 +18,13 @@ class TaskType < ActiveRecord::Base
   # monthly_counts is used for tasks that can vary by month (e.g., seasonal tasks)
   # if that's empty, use times_per_cycle
   def times_for_cycle_that_month(month)
+    return times_per_cycle.to_i if monthly_counts.blank?
+
     month_str = month.to_s
-    if monthly_counts.present?
-      return monthly_counts[month_str].to_i if monthly_counts.key?(month_str)
-      0
-    else
-      times_per_cycle.to_i
-    end
+    return times_per_cycle.to_i if monthly_counts.key?(month_str) && monthly_counts[month_str].blank?
+    return monthly_counts[month_str].to_i if monthly_counts.key?(month_str)
+
+    0
   end
 
   # return the completion date from the most recent task_instance of this task_type
